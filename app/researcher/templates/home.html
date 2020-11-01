@@ -8,9 +8,11 @@
 
 </head>
 <body>
-    <form action="/login/" method="post">
+    <form class="form-login" action="/login/" method="post">
         {% csrf_token %}
-        <p>Phone:<input type="text" name="phone"></p>
+        <p>Phone:
+            <input type="text" name="phone">
+        </p>
         <p>Password:<input type="password" name="pw"></p>
         <input type="submit" value="Submit">
     </form>

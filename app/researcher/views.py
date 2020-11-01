@@ -430,11 +430,11 @@ def count_total_P(request):
         P_num = user_list.filter(test_result="POSITIVE").count()
         num = user_list.count()
         per = P_num / num * 100
-        line1 = "The total number of people who has a POSITIVE test result is " + str(P_num)
-        line2 = "The percentage is " + str(per) + "%"
+        line1 = "The total number of people who has a POSITIVE test result is " + str(P_num) + ". "
+        line2 = "And the percentage is " + str(per) + "%"
         lines = [line1, line2]
-        response_content = '\n'.join(lines)
-        # return message_display_dashboard(request, response_content)
-        return HttpResponse(response_content, content_type="text/plain")
+        response_content = '\r\n'.join(lines)
+        return message_display_dashboard(request, response_content)
+        # return HttpResponse(response_content, content_type="text/plain")
     else:
         return HttpResponse("Invalid request")

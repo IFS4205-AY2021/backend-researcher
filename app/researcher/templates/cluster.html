@@ -1,17 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    table {
+
+     border-collapse: collapse;
+
+     font-family: Futura, Arial, sans-serif;
+        margin-left:auto;
+    margin-right:auto;
+
+}
+
+caption {
+
+     font-size: larger;
+
+     margin: 1em auto;
+
+}
+
+th,td {
+
+     padding: .65em;
+
+}
+
+th {
+
+     background: #555 nonerepeat scroll 0 0;
+
+   /* border: 1px solid #777; */
+
+   color: #fff;
+
+}
+
+td {
+
+     /* border: 1px solid #777; */
+    width: 150px ;
+}
+
+tbody tr:nth-child(odd) {
+
+     background: #ccc;
+
+}
+
+th:first-child {
+
+     border-radius: 9px 0 0 0;
+
+}
+
+th:last-child {
+
+     border-radius: 0 9px 0 0;
+
+}
+
+tr:last-child td:first-child {
+
+     border-radius: 0 0 0 9px;
+
+}
+
+tr:last-child td:last-child {
+
+     border-radius: 0 0 9px 0;
+
+}
+
+
+</style>
+<style>
+.elegant-aero {
+    margin-left:auto;
+    margin-right:auto;
+    max-width: 650px;
+    background: #D2E9FF;
+    padding: 20px 20px 20px 20px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+}
+.elegant-aero h1 {
+    font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    padding: 10px 10px 10px 20px;
+    display: block;
+    background: #C0E1FF;
+    border-bottom: 1px solid #B8DDFF;
+    margin: -20px -20px 15px;
+}
+.elegant-aero h1>span {
+    display: block;
+    font-size: 11px;
+}
+
+.elegant-aero label>span {
+    float: left;
+    margin-top: 10px;
+    color: #5E5E5E;
+}
+.elegant-aero label {
+    display: block;
+    margin: 0px 0px 5px;
+}
+.elegant-aero label>span {
+    float: left;
+    width: 20%;
+    text-align: right;
+    padding-right: 15px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.elegant-aero input[type="text"], .elegant-aero input[type="email"], .elegant-aero         textarea, .elegant-aero select {
+    color: #888;
+    width: 70%;
+    padding: 0px 0px 0px 5px;
+    border: 1px solid #C5E2FF;
+    background: #FBFBFB;
+    outline: 0;
+    -webkit-box-shadow:inset 0px 1px 6px #ECF3F5;
+    box-shadow: inset 0px 1px 6px #ECF3F5;
+    font: 200 12px/25px Arial, Helvetica, sans-serif;
+    height: 30px;
+    line-height:15px;
+    margin: 2px 6px 16px 0px;
+}
+.elegant-aero textarea{
+    height:100px;
+    padding: 5px 0px 0px 5px;
+    width: 70%;
+}
+.elegant-aero select {
+    background: #fbfbfb url('down-arrow.png') no-repeat right;
+    background: #fbfbfb url('down-arrow.png') no-repeat right;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    width: 70%;
+}
+.elegant-aero .button{
+    padding: 10px 30px 10px 30px;
+    background: #66C1E4;
+    border: none;
+    color: #FFF;
+    box-shadow: 1px 1px 1px #4C6E91;
+    -webkit-box-shadow: 1px 1px 1px #4C6E91;
+    -moz-box-shadow: 1px 1px 1px #4C6E91;
+    text-shadow: 1px 1px 1px #5079A3;
+
+}
+.elegant-aero .button:hover{
+    background: #3EB1DD;
+}
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Cluster</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
 </head>
+
 <body>
 
-<h1>Information about cluster {{ id }}</h1>
 
 
 
-    <div>
+
+    <div class="elegant-aero">
             {% csrf_token %}
+        <h1>Information about cluster {{ id }}</h1>
             <h3>Display total number of contacts: {{ total_num }}</h3>
             <h3>Display total number of infected contacts: {{ total_infected_num }}</h3>
             <h3>Percentage of infected contacts: {{ per }}%</h3>

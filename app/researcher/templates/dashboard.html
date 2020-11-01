@@ -1,10 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
 </head>
 <body>
-$END$
+<h1>Functions that can be used</h1>
+    <div>
+        <form action="/list/" method="post">
+            {% csrf_token %}
+            <h3>1. List the group data based on different categories (k-anonymity)</h3>
+<!--            <p>Name:<input type="text" name="name"></p>-->
+<!--            <p>Phone:<input type="text" name="phone"></p>-->
+            <p>Cluster id:
+                <select type="number" id="cluster_ids" name="cluster_id">
+                    <option value=""> </option>>
+                    {% for data in data %}
+                        <option value={{ data }}>{{ data }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>Age Range: from<input type="number" name="Age_minimal">to<input type="number" name="Age_maximal"></p>
+            <p>Gender:<input type="text" name="gender"></p>
+            <p>Location:<input type="text" name="location"></p>
+            <p>Test Result:<input type="text" name="test_result"></p>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div>
+        <form action="/count_avg/" method="post">
+            {% csrf_token %}
+            <h3>2. How sociable the area is?</h3>
+            <h4>The average number of total contacts have people living around here contacted on average:</h4>
+            <p>Address:<input type="text" name="location"></p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div>
+        <form action="/count_avg_P/" method="post">
+            {% csrf_token %}
+            <h3>3.How danger is one area is?</h3>
+            <h4>The average number of infected contacts of all people living near one location:</h4>
+            <p>Address:<input type="text" name="location"></p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div>
+        <form action="/count_total_P/" method="post">
+            {% csrf_token %}
+            <h3>4. The number of people whose test result is POSITIVE living near one location:</h3>
+            <p>Address:<input type="text" name="location"></p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{##}
+{#    <div>#}
+{#        <form action="/count_total/" method="post">#}
+{#            {% csrf_token %}#}
+{#            <h3>3. Display total number of infected contacts linked to one cluster:</h3>#}
+{#            <p>Location:<input type="text" name="location"></p>#}
+{#            <input type="submit" value="Submit">#}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#    <div>#}
+{#        <form action="/add_user/" method="post">#}
+{#            {% csrf_token %}#}
+{#            <h3>4. Add user:</h3>#}
+{#            <p>Name:<input type="text" name="name"></p>#}
+{#            <p>Phone:<input type="text" name="phone"></p>#}
+{#            <p>Age<input type="number" name="age"></p>#}
+{#            <p>gender:<input type="text" name="gender"></p>#}
+{#            <p>Address:<input type="text" name="address"></p>#}
+{#            <p>Location:<input type="text" name="location"></p>#}
+{#            <p>Test Result:<input type="text" name="test_result"></p>#}
+{#            <p>Password:<input type="text" name="pw"></p>#}
+{#            <p>Cluster id:<input type="number" name="cluster_id"></p>#}
+{#            <input type="submit" value="Submit">#}
+{#        </form>#}
+{#    </div>#}
+
 </body>
 </html>

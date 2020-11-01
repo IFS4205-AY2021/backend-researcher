@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Researcher Register</title>
+    <h1>Researcher Register</h1>
 </head>
 <body>
-$END$
+<form action="/register/" method="post">
+        {% csrf_token %}
+        <p>Username:    <input type="text" name="username"></p>
+        <p>Phone number:<input type="text" name="phone"></p>
+        <p>Password:    <input type="text" name="pw"></p>
+        <input type="submit" value="Submit">
+    </form>
+    <p>{{ rlt }}</p>
 </body>
 </html>

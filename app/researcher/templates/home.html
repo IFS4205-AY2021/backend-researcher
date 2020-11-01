@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Hello!</title>
+    <h1>This is the welcome page for researchers!</h1>
+    <h2>Please login first</h2>
+
 </head>
 <body>
-$END$
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        <p>Phone:<input type="text" name="phone"></p>
+        <p>Password:<input type="password" name="pw"></p>
+        <input type="submit" value="Submit">
+    </form>
+    <form action="/registration/" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Register">
+    </form>
 </body>
 </html>

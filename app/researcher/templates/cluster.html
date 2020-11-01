@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Cluster</title>
 </head>
 <body>
-$END$
+
+<h1>Information about cluster {{ id }}</h1>
+
+
+
+    <div>
+            {% csrf_token %}
+            <h3>Display total number of contacts: {{ total_num }}</h3>
+            <h3>Display total number of infected contacts: {{ total_infected_num }}</h3>
+            <h3>Percentage of infected contacts: {{ per }}%</h3>
+            <h3>Total number of females: {{ total_F }}</h3>
+            <h3>Total number of males: {{ total_M }}</h3>
+    </div>
+
+<table border="1">
+    <thread>
+    <tr>
+{#        <th>Name</th>#}
+<!--        <th>Phone</th>-->
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Location</th>
+        <th>Test result</th>
+    </tr>
+    </thread>
+     {% for data in data%}
+    <tr>
+{#        <td>{{ data.name }}</td>#}
+{#        <td>{{ data.phone }}</td>#}
+        <td>{{ data.age_min }}~{{ data.age_max }}</td>
+        <td>{{ data.gender }}</td>
+        <td>{{ data.location }}</td>
+        <td>{{ data.test_result }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 </body>
 </html>

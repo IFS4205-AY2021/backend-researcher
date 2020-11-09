@@ -74,23 +74,23 @@ def list(request):
         print(cluster_id)
         if cluster_id != "":
             return list_clu(request, cluster_id)
-        elif age_max == "" and age_min == "" and location == "" and gender == "" and test_result == "":
+        elif age_max == "" and age_min == "" and location == "" and len(gender) == 0 and test_result == "":
             return list_all(request)
-        elif (age_max != "" or age_min != "") and location == "" and gender == "" and test_result == "":
+        elif (age_max != "" or age_min != "") and location == "" and len(gender) == 0 and test_result == "":
             return list_age(request, age_min, age_max, UserInfo.objects.all())
-        elif (age_max != "" or age_min != "") and location != "" and gender == "" and test_result == "":
+        elif (age_max != "" or age_min != "") and location != "" and len(gender) == 0 and test_result == "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(location=location))
-        elif (age_max != "" or age_min != "") and location == "" and gender != "" and test_result == "":
+        elif (age_max != "" or age_min != "") and location == "" and len(gender) == 1 and test_result == "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(gender=gender))
-        elif (age_max != "" or age_min != "") and location == "" and gender == "" and test_result != "":
+        elif (age_max != "" or age_min != "") and location == "" and len(gender) == 0 and test_result != "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(test_result=test_result))
-        elif (age_max != "" or age_min != "") and location != "" and gender != "" and test_result == "":
+        elif (age_max != "" or age_min != "") and location != "" and len(gender) == 1 and test_result == "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(location=location).filter(gender=gender))
-        elif (age_max != "" or age_min != "") and location != "" and gender == "" and test_result != "":
+        elif (age_max != "" or age_min != "") and location != "" and len(gender) == 0 and test_result != "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(location=location).filter(test_result=test_result))
-        elif (age_max != "" or age_min != "") and location == "" and gender != "" and test_result != "":
+        elif (age_max != "" or age_min != "") and location == "" and len(gender) == 1 and test_result != "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(test_result=test_result).filter(gender=gender))
-        elif (age_max != "" or age_min != "") and location != "" and gender != "" and test_result != "":
+        elif (age_max != "" or age_min != "") and location != "" and len(gender) == 0 and test_result != "":
             return list_age(request, age_min, age_max, UserInfo.objects.filter(location=location).filter(gender=gender).filter(test_result=test_result))
         elif age_max == "" and age_min == "" and location != "" and gender == "" and test_result == "":
             return list_loc(request, location, UserInfo.objects.all())
@@ -104,7 +104,7 @@ def list(request):
             return list_gen(request, gender, UserInfo.objects.all())
         elif age_max == "" and age_min == "" and location == "" and gender == "" and test_result != "":
             return list_res(request, test_result, UserInfo.objects.all())
-        elif age_max == "" and age_min == "" and location != "" and gender != "" and test_result != "":
+        elif age_max == "" and age_min == "" and location == "" and gender != "" and test_result != "":
             return list_gen(request, gender, UserInfo.objects.filter(test_result=test_result))
         else:
             return HttpResponse("Invalid request")
@@ -226,11 +226,14 @@ def get_k(grouped_persons):  # 获得k值（传入字典型泛化结果）
     for group in tmpDict:  # 遍历tmpDict，取出最小的person个数，赋值给k
         if k is None or tmpDict[group] < k:
             k = tmpDict[group]
+    if k is None:
+        k = 0
     return k  # 返回的k值即为泛化结果的k值
 
 
 def export_csv(request, persons):
-
+    if len(persons) < given_k:
+        return HttpResponse("Invalid Request")
     return render(request, "list_all.html", context={"data": persons})
 
 
@@ -260,6 +263,8 @@ def max_num(age_num, loc_num, gender_num):
 
 
 def k_anonymity(request, user_list):
+    if len(user_list) < given_k:
+        return HttpResponse("Invalid Request")
     satisfying_combinations = []
     persons = read_csv(user_list)
     age_times = 0
@@ -299,10 +304,11 @@ def k_anonymity(request, user_list):
             print("any_gen")
             persons = anonymize_gender(persons)
 
-    if len(satisfying_combinations) > 0:
-        return persons
-    else:
-        return HttpResponse("Failed.")
+    return persons
+    # if len(satisfying_combinations) > 0:
+    #     return persons
+    # else:
+    #     return HttpResponse("Failed.")
 
 
 def list_cluster(request):
@@ -312,9 +318,9 @@ def list_cluster(request):
     for user in users:
         print(user.cluster_id)
 
-        if user.cluster_id in ids:
+        if user.cluster_id in ids or user.cluster_id == 0:
             print("already exist")
-            break
+            continue
         else:
             ids.append(user.cluster_id)
             count = UserInfo.objects.filter(cluster_id=user.cluster_id).count()
@@ -334,10 +340,10 @@ def count_avg(request):
         data = UserInfo.objects.filter(location=location)
         for user in data:
             person_no = person_no + 1
-            id = user.phone
+            id = user.relate
             contact_data = Contact.objects.all()
             for contact in contact_data:
-                if contact.person1_id == id or contact.person2_id == id:
+                if contact.user1 == id or contact.user2 == id:
                     total_contact = total_contact + 1
                     print(total_contact)
 
@@ -364,9 +370,17 @@ def count_avg_P(request):
             id = user.phone
             contact_data = Contact.objects.all()
             for contact in contact_data:
-                if contact.person1_id == id or contact.person2_id == id:
-                    total_contact = total_contact + 1
-                    print(total_contact)
+                if contact.user1 == id:
+                    user = UserInfo.objects.filter(relate=contact.user2)
+                    if user[0].test_result="True":
+                        total_contact = total_contact + 1
+                        print(total_contact)
+
+                elif contact.user2 == id:
+                    user = UserInfo.objects.filter(relate=contact.user1)
+                    if user[0].test_result="True":
+                        total_contact = total_contact + 1
+                        print(total_contact)
 
         if person_no == 0:
             return HttpResponse("Invalid location")
@@ -427,8 +441,12 @@ def count_total_P(request):
     if request.POST:
         location = str(request.POST['location'])
         user_list = UserInfo.objects.filter(location=location)
+        if len(user_list) == 0:
+            return HttpResponse("Invalid request")
         P_num = user_list.filter(test_result="POSITIVE").count()
         num = user_list.count()
+        print(num)
+        print(P_num)
         per = P_num / num * 100
         line1 = "The total number of people who has a POSITIVE test result is " + str(P_num) + ". "
         line2 = "And the percentage is " + str(per) + "%"

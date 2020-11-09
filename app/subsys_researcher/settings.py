@@ -25,7 +25,7 @@ SECRET_KEY = 'b_fo&ax&7#xxk02%j_m(pp-*7$eg^kod-v^!yz1mycc9!rq7+('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.132', '0.0.0.0', 'ifs4205-ay2020-1-i.comp.nus.edu.sg', 'ifs4205-ay2020-2-i.comp.nus.edu.sg', 'ifs4205-ay2020-3-i.comp.nus.edu.sg']
 
 
 # Application definition
@@ -76,8 +76,15 @@ WSGI_APPLICATION = 'subsys_researcher.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'subsys_admin',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'ifs4205-ay2020-1-i.comp.nus.edu.sg',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'ifs4205',
+        'OPTIONS': {
+          'autocommit': True,
+        },
     }
 }
 

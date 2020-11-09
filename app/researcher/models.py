@@ -13,7 +13,7 @@ class UserInfo(models.Model):
         MALE='M'
         FEMALE='F'
         UNKNOWN='NA'
-    # relate          = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    relate          = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name            = models.CharField(max_length=64)
     phone           = models.CharField(max_length=12)
     age             = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(120)])
@@ -40,7 +40,7 @@ class K_User(models.Model):
     age = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(120)])
     age_min = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(120)])
     age_max = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(120)])
-    gender = models.CharField(max_length=1)
+    gender = models.CharField(max_length=2)
     location = models.CharField(max_length=32)
     test_result = models.CharField(max_length=5, choices=TestResult.choices)
 

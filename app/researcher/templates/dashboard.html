@@ -111,7 +111,7 @@
         <form action="/list/" method="post" class="elegant-aero">
             {% csrf_token %}
             <h1>Functions that can be used</h1>
-            <h3>1. List the group data based on different categories (k-anonymity)</h3>
+            <h3>1. List the group data based on different categories (k-anonymity based on k=2)</h3>
 <!--            <p>Name:<input type="text" name="name"></p>-->
 <!--            <p>Phone:<input type="text" name="phone"></p>-->
             <label>
@@ -132,8 +132,15 @@
                 <input type="number" name="Age_minimal">to<input type="number" name="Age_maximal">
             </label>
             <label>
-                <span>Gender:  </span>
-                <input type="text" name="gender">
+                <span>
+                    Gender:
+                </span>
+                <select type="text" id="genders" name="gender">
+                    <option value=""> </option>
+
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
             </label>
             <label>
                 <span>Location:</span>
@@ -154,7 +161,7 @@
         <form action="/count_avg/" method="post" class="elegant-aero">
             {% csrf_token %}
             <h3>2. How sociable the area is?</h3>
-            <h4>The average number of total contacts have people living around here contacted on average:</h4>
+            <h4>The average number of total contacts of people living around here contacted on average:</h4>
             <label><span>Location:</span><input type="text" name="location"></label>
             <label>
                 <span>&nbsp;</span>
